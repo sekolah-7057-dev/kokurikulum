@@ -1,61 +1,279 @@
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard Kokurikulum | SK Kimanis Papar 2026</title>
-<style>
-:root{--navy:#14334b;--teal:#087f8c;--gold:#eab95c;--bg:#f3f7fa;--ink:#203242;--muted:#617487;--white:#fff}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:linear-gradient(120deg,var(--navy),#176b78);color:white;padding:25px 22px 28px}
-.wrap{max-width:1180px;margin:auto}header .eyebrow{font-size:12px;letter-spacing:1.6px;text-transform:uppercase;opacity:.8}
-h1{margin:8px 0;font-size:clamp(24px,4vw,36px)}header p{margin:0;color:#e2f2f5}
-.layout{display:grid;grid-template-columns:245px 1fr;gap:22px;max-width:1180px;margin:22px auto;padding:0 18px}
-nav,.panel,.stat{background:white;border-radius:16px;box-shadow:0 5px 20px #16374b0b}
-nav{padding:14px;height:max-content;position:sticky;top:14px}
-nav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:11px 12px;border-radius:10px;color:var(--ink);font-weight:600;cursor:pointer;margin:2px 0}
-nav button.active,nav button:hover{background:#e8f5f6;color:var(--teal)}
-main{min-width:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-.stat{padding:17px}.stat b{display:block;font-size:22px;color:var(--teal)}.stat span{font-size:12px;color:var(--muted)}
-.panel{padding:22px;margin-bottom:16px}.panel h2{margin:0 0 8px;font-size:22px}.panel h3{margin:18px 0 8px}.sub{color:var(--muted);margin:0 0 14px}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{border:1px solid #e2ebef;border-radius:12px;padding:14px}.card strong{display:block;margin-bottom:5px}.card small{color:var(--muted)}
-table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px;border-bottom:1px solid #e7eef2;vertical-align:top}th{color:#527080;background:#f5f9fa}
-.pill{display:inline-block;background:#e8f5f6;color:#087f8c;border-radius:20px;padding:4px 9px;font-size:12px;font-weight:700}
-ul{padding-left:20px;line-height:1.7}.note{background:#fff7e7;border-left:4px solid var(--gold);padding:12px 14px;border-radius:8px;font-size:13px}
-.mobile-select{display:none;width:100%;padding:12px;border-radius:10px;border:1px solid #d5e1e8;background:white;margin-bottom:14px}
-footer{text-align:center;padding:18px;color:#708493;font-size:12px}
-@media(max-width:760px){.layout{display:block;margin-top:14px;padding:0 12px}nav{display:none}.mobile-select{display:block}.stats{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.panel{padding:17px}table{display:block;overflow-x:auto;white-space:nowrap}header{padding:22px 16px}}
-</style>
-</head>
-<body>
-<header><div class="wrap"><div class="eyebrow">Buku Pengurusan Sekolah • Unit Kokurikulum 2026</div><h1>Dashboard Kokurikulum</h1><p>SK Kimanis Papar · Ringkasan pengurusan dan aktiviti kokurikulum</p></div></header>
-<div class="layout">
-<nav id="nav"></nav>
-<main>
-<select class="mobile-select" id="mobileNav" aria-label="Pilih menu"></select>
-<section class="stats">
-<div class="stat"><b>3 komponen</b><span>Kelab/Persatuan · PBB · Sukan/Permainan</span></div>
-<div class="stat"><b>12 perjumpaan</b><span>Perjumpaan unit dijadualkan dalam takwim 2026</span></div>
-<div class="stat"><b>Rabu</b><span>Hari kokurikulum menurut dasar sekolah</span></div>
-</section>
-<div id="content"></div>
-</main></div>
-<footer>Disusun berdasarkan Buku Pengurusan Sekolah 2026 · Unit Kokurikulum · SK Kimanis Papar</footer>
-<script>
-const sections=[
-["Dashboard",`<h2>Gambaran keseluruhan</h2><p class="sub">Kokurikulum ialah kegiatan lanjutan pembelajaran yang memberi ruang kepada murid mengembangkan pengetahuan, kemahiran dan nilai.</p><div class="cards"><div class="card"><strong>Fokus unit</strong><small>Mencungkil bakat, membina disiplin dan kerjasama, mengembangkan minat serta meningkatkan imej sekolah.</small></div><div class="card"><strong>Keanggotaan murid</strong><small>Dasar sekolah menyatakan murid Tahun 3–6 menyertai satu kelab/persatuan, satu badan beruniform dan satu sukan/permainan.</small></div><div class="card"><strong>Komponen utama</strong><small>Kelab dan Persatuan · Pasukan Badan Beruniform (PBB) · Sukan dan Permainan.</small></div><div class="card"><strong>Hari pelaksanaan</strong><small>Rabu ditetapkan sebagai hari kokurikulum; Selasa dinyatakan untuk program 1M1S.</small></div></div>`],
-["Organisasi & Jawatankuasa",`<h2>Organisasi & Jawatankuasa</h2><p class="sub">Dokumen menyenaraikan carta pengurusan dan jawatankuasa penyelaras bagi komponen kokurikulum.</p><ul><li>Pelaksana Komponen Pengurusan Kokurikulum</li><li>Jawatankuasa Induk Komponen Pengurusan Kokurikulum dan Jawatankuasa Unit</li><li>Jawatankuasa Pasukan Badan Beruniform</li><li>Jawatankuasa Kelab dan Persatuan</li><li>Jawatankuasa Sukan dan Permainan</li><li>Jawatankuasa Pengurusan Kokurikulum (JR21), Pembangunan Sukan Sekolah dan Majlis Sukan Sekolah (JR23)</li></ul><p class="note">Nama individu dan portfolio boleh dipaparkan mengikut carta dalam dokumen asal; ruang ini diringkaskan kerana teks carta tidak terpapar dengan jelas dalam ekstrak.</p>`],
-["Pengurusan Kelab & Persatuan",`<h2>Kelab & Persatuan</h2><p class="sub">Senarai komponen yang dirujuk dalam Buku Pengurusan Kokurikulum 2026.</p><div class="cards"><div class="card">Kelab Bahasa</div><div class="card">Persatuan Agama Islam</div><div class="card">Kelab Kesenian</div><div class="card">Kelab Doktor Muda</div><div class="card">Kelab Pencegahan Jenayah</div><div class="card">Kelab ICT</div><div class="card">Kelab STEM</div></div>`],
-["Unit Beruniform",`<h2>Pasukan Badan Beruniform</h2><p class="sub">Unit yang disenaraikan dalam dokumen sekolah.</p><div class="cards"><div class="card">Kadet Remaja Sekolah (KRS)</div><div class="card">Pengakap</div><div class="card">Bulan Sabit Merah Malaysia (BSMM)</div><div class="card">Pergerakan Puteri Islam Malaysia (PPIM)</div></div>`],
-["Sukan & Permainan",`<h2>Sukan & Permainan</h2><p class="sub">Senarai sukan dan permainan dalam dokumen 2026.</p><div class="cards"><div class="card">Bola Sepak / Futsal</div><div class="card">Badminton</div><div class="card">Bola Jaring</div><div class="card">Bola Baling</div><div class="card">Bola Tampar</div><div class="card">Ping Pong</div></div><h3>Program sukan sekolah</h3><p>Sukantara / pertandingan antara rumah sukan dan Sukan Tahunan Sekolah turut tercatat dalam takwim.</p>`],
-["Aktiviti & Perjumpaan",`<h2>Aktiviti & Perjumpaan</h2><p class="sub">Takwim menyatakan 12 perjumpaan untuk unit Kelab/Persatuan, PBB serta Sukan/Permainan.</p><table><thead><tr><th>Bil.</th><th>Tarikh</th><th>Aktiviti</th></tr></thead><tbody>${[[1,"31/1/2026","Perjumpaan (1/12)"],[2,"28/2/2026","Perjumpaan (2/12)"],[3,"14/3/2026","Perjumpaan (3/12)"],[4,"11/4/2026","Perjumpaan (4/12)"],[5,"9/5/2026","Perjumpaan (5/12)"],[6,"13/6/2026","Perjumpaan (6/12)"],[7,"25/7/2026","Perjumpaan (7/12)"],[8,"9/8/2026","Perjumpaan (8/12)"],[9,"29/8/2026","Perjumpaan (9/12)"],[10,"26/9/2026","Perjumpaan (10/12)"],[11,"10/10/2026","Perjumpaan (11/12)"],[12,"24/10/2026","Perjumpaan (12/12)"]].map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]} — semua penasihat</td></tr>`).join("")}</tbody></table>`],
-["Pertandingan & Pencapaian",`<h2>Pertandingan & Pencapaian</h2><p class="sub">Dashboard ini menyediakan bahagian untuk merekod penyertaan, keputusan dan pencapaian berdasarkan rekod sekolah.</p><div class="note">Dokumen menyebut sasaran kecemerlangan di peringkat sekolah, daerah, negeri dan kebangsaan serta majlis Anugerah Kokurikulum/Sukan. Butiran keputusan pertandingan tidak dihuraikan dalam ringkasan teks yang dibaca.</div>`],
-["Pentaksiran Kokurikulum",`<h2>Pentaksiran Kokurikulum</h2><p class="sub">Dokumen mengandungi bahagian Proses Penilaian Aktiviti dan Markah Penglibatan Aktiviti.</p><ul><li>Proses penilaian aktiviti: rujukan buku pada halaman 45–47.</li><li>Markah penglibatan aktiviti: rujukan halaman 48.</li><li>Rekod kehadiran murid diwajibkan dalam dasar pelaksanaan.</li></ul><p class="note">Paparan markah individu tidak dimasukkan di sini; perlu diisi daripada rekod pentaksiran sebenar murid.</p>`],
-["Takwim Kokurikulum",`<h2>Takwim Kokurikulum 2026</h2><p class="sub">Aktiviti utama yang kelihatan dalam takwim.</p><table><thead><tr><th>Tarikh</th><th>Aktiviti</th></tr></thead><tbody>${[["7/1/2026","Mesyuarat 1"],["26/1/2026","Pendaftaran ahli"],["29/1/2026","Merentas desa peringkat sekolah"],["11/3/2026","Mesyuarat 2"],["22/4/2026","Sukantara / pertandingan antara rumah sukan"],["25/4/2026","Sukan Tahunan Sekolah"],["11/7/2026","Karnival keusahawanan"],["9/10/2026","Perkhemahan Tahun 6"],["27/10/2026","Program lawatan Tahun 6"],["1/12/2026","Majlis Anugerah Kokurikulum / Sukan Permainan"]].map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join("")}</tbody></table><p class="note">Semak tarikh dengan salinan takwim rasmi sebelum digunakan untuk hebahan; terdapat beberapa ketidakselarasan ejaan/tarikh dalam teks ekstrak.</p>`],
-["Dokumentasi",`<h2>Dokumentasi</h2><p class="sub">Dokumen menyenaraikan keperluan pengurusan fail dan rekod aktiviti.</p><ul><li>Minit mesyuarat dan surat pekeliling berkaitan</li><li>Laporan setiap aktiviti dan laporan tahunan</li><li>Daftar penilaian setiap ahli</li><li>Rekod pencapaian cemerlang ahli</li><li>Stok dan inventori</li><li>Sampel sijil / surat penghargaan</li><li>Rekod keselamatan, kecederaan dan kemalangan jika berlaku</li></ul><p>Guru penasihat perlu melaporkan aktiviti dalam buku laporan dan menyerahkan rekod kepada PK Kokurikulum untuk semakan.</p>`]
-];
-const nav=document.getElementById('nav'), content=document.getElementById('content'), mobile=document.getElementById('mobileNav');
-sections.forEach((s,i)=>{let b=document.createElement('button');b.textContent=s[0];b.onclick=()=>show(i);nav.appendChild(b);let o=document.createElement('option');o.value=i;o.textContent=s[0];mobile.appendChild(o)});
-function show(i){content.innerHTML='<section class="panel">'+sections[i][1]+'</section>';[...nav.children].forEach((b,j)=>b.classList.toggle('active',j===i));mobile.value=i}
-mobile.onchange=()=>show(+mobile.value);show(0);
-</script></body></html>
+<!DOCTYPE html><html lang="ms"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary-container": "#00714e", "error-container": "#ffdad6", "primary-fixed-dim": "#4edea3", "surface-container-low": "#f2f3ff", "on-error": "#ffffff", "background": "#faf8ff", "surface": "#faf8ff", "on-surface-variant": "#3c4a42", "surface-container-high": "#e2e7ff", "tertiary-fixed-dim": "#89ceff", "inverse-on-surface": "#eef0ff", "surface-container-lowest": "#ffffff", "on-primary-container": "#00422b", "surface-variant": "#dae2fd", "secondary": "#006c4b", "surface-bright": "#faf8ff", "surface-container-highest": "#dae2fd", "on-secondary": "#ffffff", "primary": "#006c49", "tertiary-container": "#23acf1", "secondary-fixed": "#68fcbf", "tertiary-fixed": "#c9e6ff", "surface-dim": "#d2d9f4", "outline-variant": "#bbcabf", "on-surface": "#131b2e", "tertiary": "#006591", "on-secondary-fixed": "#002114", "surface-tint": "#006c49", "error": "#ba1a1a", "inverse-surface": "#283044", "primary-container": "#10b981", "on-background": "#131b2e", "secondary-container": "#64f9bc", "on-tertiary-container": "#003d59", "inverse-primary": "#4edea3", "on-primary": "#ffffff", "surface-container": "#eaedff", "on-tertiary": "#ffffff", "on-tertiary-fixed-variant": "#004c6e", "outline": "#6c7a71", "on-primary-fixed": "#002113", "secondary-fixed-dim": "#45dfa4", "on-tertiary-fixed": "#001e2f", "on-error-container": "#93000a", "on-secondary-fixed-variant": "#005137", "on-primary-fixed-variant": "#005236", "primary-fixed": "#6ffbbe" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xl": "1.75rem", "space-lg": "1.25rem", "gutter-desktop": "1.5rem", "space-xs": "0.25rem", "gutter": "1.125rem", "space-md": "0.875rem", "space-sm": "0.5rem", "margin": "1rem", "margin-desktop": "2rem" }, "fontFamily": { "body-base": ["Inter"], "body-sm": ["Inter"], "badge-label": ["Plus Jakarta Sans"], "caption": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "stat-val": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "display-hero-mobile": ["Plus Jakarta Sans"], "label-caps": ["Plus Jakarta Sans"], "title-sm": ["Plus Jakarta Sans"], "body-bold": ["Inter"], "display-hero": ["Plus Jakarta Sans"] }, "fontSize": { "body-base": ["14px", { "lineHeight": "22px", "letterSpacing": "0", "fontWeight": "400" }], "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0", "fontWeight": "400" }], "badge-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "caption": ["11px", { "lineHeight": "14px", "letterSpacing": "0.01em", "fontWeight": "500" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "stat-val": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "display-hero-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "800" }], "title-sm": ["16px", { "lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "700" }], "body-bold": ["14px", { "lineHeight": "22px", "letterSpacing": "0", "fontWeight": "600" }], "display-hero": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body class="bg-surface font-body-base text-body-base text-on-surface min-h-screen flex flex-col"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-20 px-4 flex items-center justify-between gap-3"><div class="flex items-center gap-3 min-w-0 flex-1"><img alt="logo sk kimanis(8).png" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1W5sYfeByWN5aWKuFvHOV9hbkqsElVORLbSm8pIPU_d-dTitYO9Yp8QbR6PKpnHY2rhoY-poJeQMk4zpAOVENnrgvyatyotb_fFud73uJ9ZChYuoL3Ex0AVVYcTc-4LSoozGMpDeRSzYqbbUL_SnY8dezGEzARoZAQ68qh-qTAuO_eLbzeMHZW-NCV6octiA4AmfENFxRUEfvdx0-rDiOOb91iy9qnEoZf69GAtcwQl0ynwxYdxwUXLZg"><div class="flex flex-col min-w-0"><div class="flex items-center gap-1.5 flex-wrap"><span class="font-title-sm text-title-sm text-primary leading-tight truncate">SK Kimanis Papar</span><span class="font-caption text-caption px-1.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-semibold">XBA6115</span></div><span class="font-caption text-caption text-on-surface-variant truncate">Buku Pengurusan Unit Kokurikulum 2026</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-20 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full pb-10">
+<div class="px-4 py-4 flex flex-col gap-4">
+<!-- Active Session Hero Banner -->
+<div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-on-secondary-container text-on-primary p-5 shadow-lg">
+<div class="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-secondary-container/20 blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-3">
+<div class="flex items-center justify-between gap-2">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-lowest/15 backdrop-blur-md">
+<span class="w-2 h-2 rounded-full bg-primary-fixed-dim animate-pulse"></span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-surface-bright">Sesi 2026 • Aktif</span>
+</div>
+<span class="font-badge-label text-badge-label bg-surface-container-lowest/20 px-2 py-0.5 rounded-full text-surface-bright">Kod: XBA6115</span>
+</div>
+<div class="flex items-center gap-3">
+<img alt="Lencana SK Kimanis Papar" class="w-14 h-16 object-contain flex-shrink-0 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDovF1Oh6hhYUNySBhp_f8Z-Qjz3H80Alx7uA68UhQg8dHTjA2XLHWt3RBxB_b6g1AEIQWmlbbVY-AVl6aKi7n_xVv3grW7fkGalHepnvSgMMFXC-Bjo3l3fKFh90HBa38xCF3ek5R8h1gcyHvdnfqTVqCFViAc438nwci5LYB_QOklEYzoo0by2CGCWtogpIC_fhd4fKSjUc8wdNMYOusZHj47s8xZsWqK4a2QMm8_Oy2OkLjlhQkg">
+<div class="flex flex-col min-w-0">
+<span class="font-caption text-caption text-secondary-fixed/90 uppercase tracking-widest font-semibold">SK Kimanis Papar</span>
+<span class="font-headline-lg text-headline-lg font-bold text-surface-bright leading-tight">Dashboard Kokurikulum</span>
+<span class="font-caption text-caption text-surface-variant/90 line-clamp-1">Ringkasan pengurusan &amp; pemantauan aktiviti murid</span>
+</div>
+</div>
+<div class="pt-2 border-t border-white/10 flex items-center justify-between text-surface-bright/90">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary-fixed">verified</span>
+<span class="font-caption text-caption">Moto: "USAHA JAYA"</span>
+</div>
+<span class="font-caption text-caption bg-surface-container-lowest/20 px-2 py-0.5 rounded-lg text-surface-bright">Modul PAJSK KPM</span>
+</div>
+</div>
+</div>
+<!-- 3 Core Stats Bento Layout -->
+<div class="grid grid-cols-3 gap-2.5">
+<!-- Stat 1: 3 Komponen -->
+<div class="bg-surface-container-lowest p-3 rounded-xl shadow-sm flex flex-col justify-between">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary mb-1">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">category</span>
+</div>
+<div>
+<span class="font-stat-val text-stat-val text-on-surface block leading-tight">3</span>
+<span class="font-label-caps text-label-caps uppercase text-primary font-bold block mt-0.5">Komponen</span>
+<span class="font-caption text-caption text-on-surface-variant text-[10px] leading-tight block mt-0.5 line-clamp-2">PBB · Kelab · Sukan</span>
+</div>
+</div>
+<!-- Stat 2: 12 Perjumpaan -->
+<div class="bg-surface-container-lowest p-3 rounded-xl shadow-sm flex flex-col justify-between">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">event_repeat</span>
+</div>
+<div>
+<span class="font-stat-val text-stat-val text-on-surface block leading-tight">12</span>
+<span class="font-label-caps text-label-caps uppercase text-secondary font-bold block mt-0.5">Perjumpaan</span>
+<span class="font-caption text-caption text-on-surface-variant text-[10px] leading-tight block mt-0.5 line-clamp-2">Takwim Rasmi 2026</span>
+</div>
+</div>
+<!-- Stat 3: Hari Kokurikulum -->
+<div class="bg-surface-container-lowest p-3 rounded-xl shadow-sm flex flex-col justify-between">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-tertiary mb-1">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">today</span>
+</div>
+<div>
+<span class="font-title-sm text-title-sm text-on-surface font-extrabold block leading-tight mt-1">Rabu</span>
+<span class="font-label-caps text-label-caps uppercase text-tertiary font-bold block mt-0.5">&amp; Selasa</span>
+<span class="font-caption text-caption text-on-surface-variant text-[10px] leading-tight block mt-0.5 line-clamp-2">Dasar Sekolah &amp; 1M1S</span>
+</div>
+</div>
+</div>
+<!-- Peringatan / Aktiviti Terdekat Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
+<span class="font-title-sm text-title-sm text-on-surface font-bold">Aktiviti Mingguan Terdekat</span>
+</div>
+<span class="font-badge-label text-badge-label px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">Rabu Ini</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-3 flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col">
+<span class="font-body-bold text-body-bold text-on-surface">Perjumpaan Pasukan Badan Beruniform</span>
+<span class="font-caption text-caption text-on-surface-variant">Giliran Minggu Ke-5 • Pengakap, TKRS &amp; BSMM</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<div class="flex flex-wrap items-center gap-3 pt-1 text-on-surface-variant font-caption text-caption">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+<span class="">3:30 ptg - 5:30 ptg</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">pin_drop</span>
+<span class="">Dataran Perhimpunan &amp; Dewan</span>
+</div>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="w-full py-2.5 px-3 rounded-full bg-primary text-on-primary font-badge-label text-badge-label flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">fact_check</span>
+<span class="">Sahkan Kehadiran</span>
+</button>
+<button class="w-full py-2.5 px-3 rounded-full bg-surface-container-high text-on-surface font-badge-label text-badge-label flex items-center justify-center gap-1.5 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<span class="">Semak Takwim</span>
+</button>
+</div>
+</div>
+<!-- Seksyen 3 Komponen Teras Kokurikulum -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-title-sm text-title-sm text-on-surface font-bold">3 Komponen Kokurikulum</span>
+<span class="font-caption text-caption text-on-surface-variant">Penyertaan dan status rekod 12 perjumpaan</span>
+</div>
+<span class="font-badge-label text-badge-label text-primary font-bold">Semua Unit</span>
+</div>
+<!-- Komponen 1: Pasukan Badan Beruniform (PBB) -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-bold text-body-bold text-on-surface">Pasukan Badan Beruniform</span>
+<span class="font-caption text-caption text-on-surface-variant">4 Unit Berdaftar (Tahap 2)</span>
+</div>
+</div>
+<span class="font-badge-label text-badge-label px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container">Perjumpaan 4/12</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-on-surface font-caption text-caption">
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="truncate">Pengakap Kanak-Kanak</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="truncate">KRS / TKRS Sekolah</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="truncate">Bulan Sabit Merah (BSMM)</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="truncate">Pandu Puteri Tunas</span>
+</div>
+</div>
+<!-- Progress bar visual -->
+<div class="flex flex-col gap-1 pt-1">
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span class="">Kemajuan Takwim Tahunan</span>
+<span class="font-semibold text-primary">33.3% Selesai</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 33.3%;"></div>
+</div>
+</div>
+</div>
+<!-- Komponen 2: Kelab & Persatuan -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl bg-tertiary-container/30 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-bold text-body-bold text-on-surface">Kelab &amp; Persatuan</span>
+<span class="font-caption text-caption text-on-surface-variant">Akademik &amp; Hobi / Kesenian</span>
+</div>
+</div>
+<span class="font-badge-label text-badge-label px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant">Perjumpaan 4/12</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-on-surface font-caption text-caption">
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="truncate">Kelab STEM &amp; Robotik</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="truncate">Persatuan Bahasa Melayu</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="truncate">Kelab Pendidikan Islam</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="truncate">Kelab Seni &amp; Kebudayaan</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 pt-1">
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span class="">Kemajuan Takwim Tahunan</span>
+<span class="font-semibold text-tertiary">33.3% Selesai</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 33.3%;"></div>
+</div>
+</div>
+</div>
+<!-- Komponen 3: Sukan & Permainan -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl bg-error-container/40 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">sports_soccer</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-bold text-body-bold text-on-surface">Sukan &amp; Permainan (1M1S)</span>
+<span class="font-caption text-caption text-on-surface-variant">Kecergasan &amp; Pembangunan Bakat</span>
+</div>
+</div>
+<span class="font-badge-label text-badge-label px-2.5 py-0.5 rounded-full bg-error-container text-on-error-container">Perjumpaan 5/12</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-on-surface font-caption text-caption">
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="truncate">Kelab Bola Sepak / Futsal</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="truncate">Kelab Badminton</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="truncate">Kelab Bola Jaring</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-low flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="truncate">Kelab Olahraga &amp; Balapan</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 pt-1">
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span class="">Kemajuan Takwim Tahunan</span>
+<span class="font-semibold text-error">41.6% Selesai</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 41.6%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sorotan Visual Aktiviti Murid (Placeholders) -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm text-on-surface font-bold">Lensa Kokurikulum Semasa</span>
+<span class="font-caption text-caption text-primary font-semibold">Galeri 2026</span>
+</div>
+<div class="grid grid-cols-2 gap-2.5">
+<div class="relative rounded-xl overflow-hidden shadow-sm h-28">
+<img class="w-full h-full object-cover" data-alt="Malaysian primary school students in green scout uniforms assembling on the grass field of SK Kimanis Papar Sabah during a morning co-curricular training session, warm tropical lighting, authentic school atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiEILMvSFZeSQJ_3S6UnHxjScyk8vthaLgXq7Bg6xHNweW-r3_fGEvxPdWz3YY6NLysbEWBQQGmZY7FPHpTsflC0dKJe9eZ_KOgq2e1RLWkOI-XDLHfrt2gB8sD458rW_hwYb0nxuVnffNCCAVp6K-g15BwtLBjC-gnWFkAwS_72vsc_dPdCtr_3whByokdZ_bJIDn33yfka_fr4GSVoAHfWIedFxKRhjfkc1-RsI">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2">
+<span class="text-white font-caption text-caption font-semibold">Latihan Kawad PBB</span>
+</div>
+</div>
+<div class="relative rounded-xl overflow-hidden shadow-sm h-28">
+<img class="w-full h-full object-cover" data-alt="Energetic primary school children playing football and athletics drills on green school field in Sabah Malaysia with tropical palm trees in background, sunny bright day, co-curricular sports day training" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTCKedlyjDQmSnURd2V2Ms4lLQfk2l9snjAxwDYXnxBdDL_hZEu6uzSbwcXU7a4FaDccv_hJJ7jqGz-U56SN8mUz7L-SWCvhx4UwFj0iMdggDYcJVv31sXCL0DzBphUtbxpSWZKfBHBpt13Uj_h7HqXEVuHnC_oX1QuZ5e4BrtI1qPT_sO_M8ppFy8elOHuvK6lrs6ilURkwHJIPVrUUmvU1HQYtlkptV4Ko89RxY">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2">
+<span class="text-white font-caption text-caption font-semibold">Program 1M1S</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Notis Rasmi & Dasar PAJSK KPM -->
+<div class="rounded-xl bg-surface-container-high/60 p-3.5 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[22px] flex-shrink-0 mt-0.5">menu_book</span>
+<div class="flex flex-col gap-1 min-w-0">
+<span class="font-body-bold text-body-bold text-on-surface">Pematuhan Modul PAJSK KPM</span>
+<p class="font-caption text-caption text-on-surface-variant leading-relaxed">
+          Disusun berdasarkan Buku Pengurusan Sekolah 2026 · Unit Kokurikulum · SK Kimanis Papar (Kod: XBA6115). Kehadiran minimum setiap murid bagi melayakkan markah penuh PAJSK ialah 12 perjumpaan setahun.
+        </p>
+</div>
+</div>
+</div>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-2"><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[44px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="komponen" href="#"><span class="material-symbols-outlined text-[22px]">category</span><span class="font-caption text-caption mt-0.5">Komponen</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[44px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="takwim" href="#"><span class="material-symbols-outlined text-[22px]">calendar_month</span><span class="font-caption text-caption mt-0.5">Takwim</span></a><a class="flex flex-col items-center justify-center min-w-[64px] min-h-[44px] py-1 text-on-surface-variant hover:text-primary transition-colors" data-path="profil-dasar" href="#"><span class="material-symbols-outlined text-[22px]">policy</span><span class="font-caption text-caption mt-0.5">Profil/Dasar</span></a></div></nav>
+
+</body></html>
