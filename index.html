@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Kokurikulum | SK Kimanis Papar 2026</title>
+<style>
+:root{--navy:#14334b;--teal:#087f8c;--gold:#eab95c;--bg:#f3f7fa;--ink:#203242;--muted:#617487;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(120deg,var(--navy),#176b78);color:white;padding:25px 22px 28px}
+.wrap{max-width:1180px;margin:auto}header .eyebrow{font-size:12px;letter-spacing:1.6px;text-transform:uppercase;opacity:.8}
+h1{margin:8px 0;font-size:clamp(24px,4vw,36px)}header p{margin:0;color:#e2f2f5}
+.layout{display:grid;grid-template-columns:245px 1fr;gap:22px;max-width:1180px;margin:22px auto;padding:0 18px}
+nav,.panel,.stat{background:white;border-radius:16px;box-shadow:0 5px 20px #16374b0b}
+nav{padding:14px;height:max-content;position:sticky;top:14px}
+nav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:11px 12px;border-radius:10px;color:var(--ink);font-weight:600;cursor:pointer;margin:2px 0}
+nav button.active,nav button:hover{background:#e8f5f6;color:var(--teal)}
+main{min-width:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.stat{padding:17px}.stat b{display:block;font-size:22px;color:var(--teal)}.stat span{font-size:12px;color:var(--muted)}
+.panel{padding:22px;margin-bottom:16px}.panel h2{margin:0 0 8px;font-size:22px}.panel h3{margin:18px 0 8px}.sub{color:var(--muted);margin:0 0 14px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{border:1px solid #e2ebef;border-radius:12px;padding:14px}.card strong{display:block;margin-bottom:5px}.card small{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px;border-bottom:1px solid #e7eef2;vertical-align:top}th{color:#527080;background:#f5f9fa}
+.pill{display:inline-block;background:#e8f5f6;color:#087f8c;border-radius:20px;padding:4px 9px;font-size:12px;font-weight:700}
+ul{padding-left:20px;line-height:1.7}.note{background:#fff7e7;border-left:4px solid var(--gold);padding:12px 14px;border-radius:8px;font-size:13px}
+.mobile-select{display:none;width:100%;padding:12px;border-radius:10px;border:1px solid #d5e1e8;background:white;margin-bottom:14px}
+footer{text-align:center;padding:18px;color:#708493;font-size:12px}
+@media(max-width:760px){.layout{display:block;margin-top:14px;padding:0 12px}nav{display:none}.mobile-select{display:block}.stats{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr}.panel{padding:17px}table{display:block;overflow-x:auto;white-space:nowrap}header{padding:22px 16px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="eyebrow">Buku Pengurusan Sekolah • Unit Kokurikulum 2026</div><h1>Dashboard Kokurikulum</h1><p>SK Kimanis Papar · Ringkasan pengurusan dan aktiviti kokurikulum</p></div></header>
+<div class="layout">
+<nav id="nav"></nav>
+<main>
+<select class="mobile-select" id="mobileNav" aria-label="Pilih menu"></select>
+<section class="stats">
+<div class="stat"><b>3 komponen</b><span>Kelab/Persatuan · PBB · Sukan/Permainan</span></div>
+<div class="stat"><b>12 perjumpaan</b><span>Perjumpaan unit dijadualkan dalam takwim 2026</span></div>
+<div class="stat"><b>Rabu</b><span>Hari kokurikulum menurut dasar sekolah</span></div>
+</section>
+<div id="content"></div>
+</main></div>
+<footer>Disusun berdasarkan Buku Pengurusan Sekolah 2026 · Unit Kokurikulum · SK Kimanis Papar</footer>
+<script>
+const sections=[
+["Dashboard",`<h2>Gambaran keseluruhan</h2><p class="sub">Kokurikulum ialah kegiatan lanjutan pembelajaran yang memberi ruang kepada murid mengembangkan pengetahuan, kemahiran dan nilai.</p><div class="cards"><div class="card"><strong>Fokus unit</strong><small>Mencungkil bakat, membina disiplin dan kerjasama, mengembangkan minat serta meningkatkan imej sekolah.</small></div><div class="card"><strong>Keanggotaan murid</strong><small>Dasar sekolah menyatakan murid Tahun 3–6 menyertai satu kelab/persatuan, satu badan beruniform dan satu sukan/permainan.</small></div><div class="card"><strong>Komponen utama</strong><small>Kelab dan Persatuan · Pasukan Badan Beruniform (PBB) · Sukan dan Permainan.</small></div><div class="card"><strong>Hari pelaksanaan</strong><small>Rabu ditetapkan sebagai hari kokurikulum; Selasa dinyatakan untuk program 1M1S.</small></div></div>`],
+["Organisasi & Jawatankuasa",`<h2>Organisasi & Jawatankuasa</h2><p class="sub">Dokumen menyenaraikan carta pengurusan dan jawatankuasa penyelaras bagi komponen kokurikulum.</p><ul><li>Pelaksana Komponen Pengurusan Kokurikulum</li><li>Jawatankuasa Induk Komponen Pengurusan Kokurikulum dan Jawatankuasa Unit</li><li>Jawatankuasa Pasukan Badan Beruniform</li><li>Jawatankuasa Kelab dan Persatuan</li><li>Jawatankuasa Sukan dan Permainan</li><li>Jawatankuasa Pengurusan Kokurikulum (JR21), Pembangunan Sukan Sekolah dan Majlis Sukan Sekolah (JR23)</li></ul><p class="note">Nama individu dan portfolio boleh dipaparkan mengikut carta dalam dokumen asal; ruang ini diringkaskan kerana teks carta tidak terpapar dengan jelas dalam ekstrak.</p>`],
+["Pengurusan Kelab & Persatuan",`<h2>Kelab & Persatuan</h2><p class="sub">Senarai komponen yang dirujuk dalam Buku Pengurusan Kokurikulum 2026.</p><div class="cards"><div class="card">Kelab Bahasa</div><div class="card">Persatuan Agama Islam</div><div class="card">Kelab Kesenian</div><div class="card">Kelab Doktor Muda</div><div class="card">Kelab Pencegahan Jenayah</div><div class="card">Kelab ICT</div><div class="card">Kelab STEM</div></div>`],
+["Unit Beruniform",`<h2>Pasukan Badan Beruniform</h2><p class="sub">Unit yang disenaraikan dalam dokumen sekolah.</p><div class="cards"><div class="card">Kadet Remaja Sekolah (KRS)</div><div class="card">Pengakap</div><div class="card">Bulan Sabit Merah Malaysia (BSMM)</div><div class="card">Pergerakan Puteri Islam Malaysia (PPIM)</div></div>`],
+["Sukan & Permainan",`<h2>Sukan & Permainan</h2><p class="sub">Senarai sukan dan permainan dalam dokumen 2026.</p><div class="cards"><div class="card">Bola Sepak / Futsal</div><div class="card">Badminton</div><div class="card">Bola Jaring</div><div class="card">Bola Baling</div><div class="card">Bola Tampar</div><div class="card">Ping Pong</div></div><h3>Program sukan sekolah</h3><p>Sukantara / pertandingan antara rumah sukan dan Sukan Tahunan Sekolah turut tercatat dalam takwim.</p>`],
+["Aktiviti & Perjumpaan",`<h2>Aktiviti & Perjumpaan</h2><p class="sub">Takwim menyatakan 12 perjumpaan untuk unit Kelab/Persatuan, PBB serta Sukan/Permainan.</p><table><thead><tr><th>Bil.</th><th>Tarikh</th><th>Aktiviti</th></tr></thead><tbody>${[[1,"31/1/2026","Perjumpaan (1/12)"],[2,"28/2/2026","Perjumpaan (2/12)"],[3,"14/3/2026","Perjumpaan (3/12)"],[4,"11/4/2026","Perjumpaan (4/12)"],[5,"9/5/2026","Perjumpaan (5/12)"],[6,"13/6/2026","Perjumpaan (6/12)"],[7,"25/7/2026","Perjumpaan (7/12)"],[8,"9/8/2026","Perjumpaan (8/12)"],[9,"29/8/2026","Perjumpaan (9/12)"],[10,"26/9/2026","Perjumpaan (10/12)"],[11,"10/10/2026","Perjumpaan (11/12)"],[12,"24/10/2026","Perjumpaan (12/12)"]].map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]} — semua penasihat</td></tr>`).join("")}</tbody></table>`],
+["Pertandingan & Pencapaian",`<h2>Pertandingan & Pencapaian</h2><p class="sub">Dashboard ini menyediakan bahagian untuk merekod penyertaan, keputusan dan pencapaian berdasarkan rekod sekolah.</p><div class="note">Dokumen menyebut sasaran kecemerlangan di peringkat sekolah, daerah, negeri dan kebangsaan serta majlis Anugerah Kokurikulum/Sukan. Butiran keputusan pertandingan tidak dihuraikan dalam ringkasan teks yang dibaca.</div>`],
+["Pentaksiran Kokurikulum",`<h2>Pentaksiran Kokurikulum</h2><p class="sub">Dokumen mengandungi bahagian Proses Penilaian Aktiviti dan Markah Penglibatan Aktiviti.</p><ul><li>Proses penilaian aktiviti: rujukan buku pada halaman 45–47.</li><li>Markah penglibatan aktiviti: rujukan halaman 48.</li><li>Rekod kehadiran murid diwajibkan dalam dasar pelaksanaan.</li></ul><p class="note">Paparan markah individu tidak dimasukkan di sini; perlu diisi daripada rekod pentaksiran sebenar murid.</p>`],
+["Takwim Kokurikulum",`<h2>Takwim Kokurikulum 2026</h2><p class="sub">Aktiviti utama yang kelihatan dalam takwim.</p><table><thead><tr><th>Tarikh</th><th>Aktiviti</th></tr></thead><tbody>${[["7/1/2026","Mesyuarat 1"],["26/1/2026","Pendaftaran ahli"],["29/1/2026","Merentas desa peringkat sekolah"],["11/3/2026","Mesyuarat 2"],["22/4/2026","Sukantara / pertandingan antara rumah sukan"],["25/4/2026","Sukan Tahunan Sekolah"],["11/7/2026","Karnival keusahawanan"],["9/10/2026","Perkhemahan Tahun 6"],["27/10/2026","Program lawatan Tahun 6"],["1/12/2026","Majlis Anugerah Kokurikulum / Sukan Permainan"]].map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join("")}</tbody></table><p class="note">Semak tarikh dengan salinan takwim rasmi sebelum digunakan untuk hebahan; terdapat beberapa ketidakselarasan ejaan/tarikh dalam teks ekstrak.</p>`],
+["Dokumentasi",`<h2>Dokumentasi</h2><p class="sub">Dokumen menyenaraikan keperluan pengurusan fail dan rekod aktiviti.</p><ul><li>Minit mesyuarat dan surat pekeliling berkaitan</li><li>Laporan setiap aktiviti dan laporan tahunan</li><li>Daftar penilaian setiap ahli</li><li>Rekod pencapaian cemerlang ahli</li><li>Stok dan inventori</li><li>Sampel sijil / surat penghargaan</li><li>Rekod keselamatan, kecederaan dan kemalangan jika berlaku</li></ul><p>Guru penasihat perlu melaporkan aktiviti dalam buku laporan dan menyerahkan rekod kepada PK Kokurikulum untuk semakan.</p>`]
+];
+const nav=document.getElementById('nav'), content=document.getElementById('content'), mobile=document.getElementById('mobileNav');
+sections.forEach((s,i)=>{let b=document.createElement('button');b.textContent=s[0];b.onclick=()=>show(i);nav.appendChild(b);let o=document.createElement('option');o.value=i;o.textContent=s[0];mobile.appendChild(o)});
+function show(i){content.innerHTML='<section class="panel">'+sections[i][1]+'</section>';[...nav.children].forEach((b,j)=>b.classList.toggle('active',j===i));mobile.value=i}
+mobile.onchange=()=>show(+mobile.value);show(0);
+</script></body></html>
